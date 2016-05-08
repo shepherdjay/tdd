@@ -1,0 +1,18 @@
+---
+- hosts: development
+  tasks:
+  - name: Install IUS community repository
+    yum: name=https://centos6.iuscommunity.org/ius-release.rpm
+    become: yes
+
+  - name: Install Python 3
+    yum: name={{ item }}
+    with_items:
+      - python35u
+      - python35u-devel
+      - python35u-pip
+    become: yes
+
+  - name: Install dependencies
+    pip: requirements=/vagrant/requirements.txt executable=pip3.5
+    become: yes
