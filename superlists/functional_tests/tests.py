@@ -1,18 +1,22 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
 
 
 class NewVisitorTest(LiveServerTestCase):
+    def safe_close(self):
+        """
+        Safely closes browser session due to WinError10054
+        """
+        self.browser.refresh()
+        self.browser.quit()
+
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
-        # Refresh before teardown due to WinError 10054
-        self.browser.refresh()
-        self.browser.quit()
+        self.safe_close()
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
@@ -62,7 +66,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         ## We use a new browser session to make sure that no information
         ## of Edith's is coming through from cookies etc
-        self.browser.quit()
+        self.safe_close()
         self.browser = webdriver.Firefox()
 
         # Francis visits the home page. There is no sign of Edith's
