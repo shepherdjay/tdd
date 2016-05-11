@@ -1,7 +1,7 @@
 import random
 
 from fabric.api import env, local
-from fabric.contrib.files import append, exists, sed, run, sudo
+from fabric.contrib.files import append, exists, sed, run, sudo, settings
 
 REPO_URL = 'https://github.com/Nuttycomputer/tdd.git'
 env.key_filename = 'private_key.pem'
@@ -101,4 +101,6 @@ def _upstart_config(source_folder, site_name):
 
 def _start_services(site_name):
     sudo('service nginx reload')
-    sudo('restart gunicorn-%s' % site_name)
+    with settings(warn_only=True):
+        sudo('stop gunicorn-%s' % site_name)
+    sudo('start gunicorn-%s' % site_name)
