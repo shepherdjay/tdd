@@ -1,14 +1,18 @@
 import random
 
 from fabric.api import env, local
-from fabric.contrib.files import append, exists, sed, run
+from fabric.contrib.files import append, exists, sed, run, sudo
 
 REPO_URL = 'https://github.com/Nuttycomputer/tdd.git'
 env.key_filename = 'private_key.pem'
 
 
-def deploy():
+def provision():
+    _install_dependencies()
+    _install_virtualenv()
 
+
+def deploy():
     site_folder = '/home/%s/sites/%s' % (env.user, env.host)
     source_folder = site_folder + '/source'
     _create_directory_structure_if_necessary(site_folder)
@@ -17,6 +21,17 @@ def deploy():
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
+    _nginx_config(source_folder, env.host)
+    _upstart_config(source_folder, env.host)
+    _start_services(env.host)
+
+
+def _install_dependencies():
+    sudo('apt-get install -y nginx git python3 python3-pip')
+
+
+def _install_virtualenv():
+    sudo('pip3 install virtualenv')
 
 
 def _create_directory_structure_if_necessary(site_folder):
@@ -65,3 +80,25 @@ def _update_static_files(source_folder):
 
 def _update_database(source_folder):
     run('cd %s && ../virtualenv/bin/python3 manage.py migrate --noinput' % source_folder)
+
+
+def _nginx_config(source_folder, site_name):
+    run('cd %s && '
+        'sed "s/SITENAME/%s/g" '
+        'deploy_tools/nginx.template.conf '
+        '| '
+        'sudo tee /etc/nginx/sites-available/%s' % (source_folder,site_name, site_name))
+
+    if not exists('/etc/nginx/sites-enabled/%s' % site_name):
+        sudo('ln -s /etc/nginx/sites-available/%s /etc/nginx/sites-enabled/%s' % (site_name, site_name))
+
+
+def _upstart_config(source_folder, site_name):
+    run('cd %s && sed "s/SITENAME/%s/g" \
+    deploy_tools/gunicorn-upstart.template.conf | sudo tee \
+    /etc/init/gunicorn-%s.conf' % (source_folder,site_name, site_name))
+
+
+def _start_services(site_name):
+    sudo('service nginx reload')
+    sudo('restart gunicorn-%s' % site_name)
