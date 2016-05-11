@@ -4,6 +4,7 @@ db.sqlite3
 .idea/
 __pycache__
 *.pyc
+*.pem
 
 # Created by .ignore support plugin (hsz.mobi)
 ### JetBrains template
