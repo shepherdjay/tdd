@@ -1,4 +1,4 @@
-laguage: python
+language: python
 sudo: required
 python:
   - "3.4"
