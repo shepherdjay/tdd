@@ -1,6 +1,7 @@
 laguage: python
 sudo: required
 python:
+  - "3.4"
   - "3.5"
 #command to install dependencies
 install:
