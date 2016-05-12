@@ -17,4 +17,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
  #command to run tests
-script: "python manage.py test"
+script: "coverage run --source=lists manage.py test"
+
+after_success:
+  - coveralls
