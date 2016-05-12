@@ -7,4 +7,4 @@ python:
 install:
   - "sudo pip install -r requirements-tests.txt"
 #command to run tests
-script: "python3 ./managepy.py test"
+script: "python manage.py test"
