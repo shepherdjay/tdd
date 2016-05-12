@@ -19,7 +19,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
  #command to run tests
-script: py.test -rx
+script: py.test --cov-config .coveragerc --cov=lists -rx
 
 after_success:
   - coveralls
