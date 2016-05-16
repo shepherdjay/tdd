@@ -3,7 +3,6 @@ from unittest import expectedFailure
 
 
 class ItemValidationTest(FunctionalTest):
-    @expectedFailure
     def test_cannot_add_empty_list_items(self):
         # Edith goes to the home page and accidentally tries to submit
         # an empty list item. She hits Enter on the empty input box
