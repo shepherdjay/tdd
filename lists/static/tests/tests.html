@@ -20,13 +20,13 @@
 <script src="qunit.js"></script>
 <script src="../list.js"></script>
 <script>
-    test("errors should be hidden on keypress", function () {
-        $('input').trigger('keypress');
-        equal($('.has-error').is(':visible'), false);
+    QUnit.test("errors should be hidden on keypress", function (assert) {
+        $('input[name=text]').trigger('keypress');
+        assert.equal($('.has-error').is(':visible'), false);
     });
 
-    test("errors should not be hidden unless there is a keypress", function () {
-        equal($('.has-error').is(':visible'), true);
+    QUnit.test("errors should not be hidden unless there is a keypress", function (assert) {
+        assert.equal($('.has-error').is(':visible'), true);
     });
 </script>
 
