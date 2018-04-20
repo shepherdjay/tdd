@@ -4,4 +4,8 @@ branch = True
 source =
     superlists
     lists
-    tests
+
+omit =
+    */admin.py
+    */wsgi.py
+
