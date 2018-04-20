@@ -44,3 +44,4 @@ def chrome_browser():
 @pytest.fixture()
 def browser(chrome_browser):
     return Browser(chrome_browser)
+
