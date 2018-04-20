@@ -1,7 +1,7 @@
 from selenium import webdriver
 
 from selenium.webdriver.common.keys import Keys
-from .base import FunctionalTest
+from .base import FunctionalTest, CHROME_OPTIONS
 
 
 class NewVisitorTest(FunctionalTest):
@@ -49,7 +49,7 @@ class NewVisitorTest(FunctionalTest):
         ## We use a new browser session to make sure that no information
         ## of Edith's is coming through from cookies etc
         self.safe_close()
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome(chrome_options=CHROME_OPTIONS)
 
         # Francis visits the home page. There is no sign of Edith's
         # list

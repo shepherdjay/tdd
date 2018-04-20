@@ -1,8 +1,15 @@
+import os
 import sys
 
-from selenium import webdriver
-
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+
+CHROME_OPTIONS = Options()
+CHROME_OPTIONS.add_argument("--headless")
+CHROME_OPTIONS.add_argument("--disable-gpu")
+
 
 
 class FunctionalTest(StaticLiveServerTestCase):
@@ -21,7 +28,7 @@ class FunctionalTest(StaticLiveServerTestCase):
             super().tearDownClass()
 
     def setUp(self):
-        self.browser = webdriver.Firefox()
+        self.browser = webdriver.Chrome(chrome_options=CHROME_OPTIONS)
         self.browser.implicitly_wait(4)
 
     def tearDown(self):
