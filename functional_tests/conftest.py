@@ -3,7 +3,6 @@ import os
 import pytest
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.remote_connection import RemoteConnection
 
 saucelabs_browsers = [
@@ -89,7 +88,7 @@ def saucelabs_driver(request, browser_config):
         command_executor=executor,
         desired_capabilities=desired_caps
     )
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(15)
 
     # This is specifically for SauceLabs plugin.
     # In case test fails after selenium session creation having this here will help track it down.
