@@ -1,31 +1,30 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "nightly"
+- '3.4'
+- '3.5'
+- '3.6'
+- nightly
+
 branches:
   only:
-    - master
+  - master
 
 dist: trusty
+
+env:
+  global:
+    secure: dK3TRry573BFZlfzvIjaamT+1mHgCjsCdyxbZnI5fZSCLbZoYuipywawDjtvKvNrOa9rEvP8Qt8ybPrzxeGRYpadIAMrgeKgRnM3/bTWUAFuoYdxuLb13RKmaQjw+N67OZhQzDuhyvXRYYm7plKL0bH9ErdIHb/HvObqZWtTpTi+kA8IxXh2mpkt27j+B17LRcOQmULUhZkcuMuGc920NiozrwK80gmBDQo0uONoSBsaBDf+6EnsGWGS77POPyzGEBZuV3GzVXslbrYmEWhppG5bmLytdJCnP2136XVLcWrbYv2NCWYqEquUKf+xuNrGIBMRNVLQm6TwBvnIhgUyHVmqUkAv2zpYDUM6Qg6IoaNJT/dKpO1rIEytmxOuWS8X7oN25YegjBBfRQnKUocMCatN97ZolyWu3szzY274dRTJNpXA1OPw6/iMfBCeC4zbvYTh2V6Uz84/XC0SNH3lyOaMKqDHMURvEq0BYErF9miIjQ+dp8MAJKSIuSiO/G3mi7CcBlCjJrcbRHBYeAUf9laRhDrun9UUTsnypR17Vb2alggMSBKJ8H+kHfjVAsCL8lJnCM0Kwq7eN0+gTIbcrJvG0aIiv1UfQS6/VH672OXzFc9N+b72usG3vSKtecudWOVlTV9SQEcXPMhJdkZJDdRJClx2WHfiXSlfAnQ4SVU=
+
 addons:
-  chrome: stable
-before_install:
-  # Install ChromeDriver (64bits; replace 64 with 32 for 32bits).
-  - wget -N http://chromedriver.storage.googleapis.com/2.38/chromedriver_linux64.zip -P ~/
-  - unzip ~/chromedriver_linux64.zip -d ~/
-  - rm ~/chromedriver_linux64.zip
-  - sudo mv -f ~/chromedriver /usr/local/share/
-  - sudo chmod +x /usr/local/share/chromedriver
-  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+  sauce_connect:
+    username: shepherdjay
 
 install:
-  - pip install -r requirements-tests.txt
-  - pip install codecov
+- pip install -r requirements-tests.txt
+- pip install codecov
 
 script:
-  - py.test --cov
+- py.test --cov
 
 after_success:
-  - codecov
+- codecov
