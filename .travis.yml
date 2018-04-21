@@ -12,7 +12,6 @@ addons:
   chrome: stable
   sauce_connect:
     username: "shepherdjay"
-  jwt:
     secure: XYWfPo1dDYpwSDHOtQOoDXTxk8S4KJQ2jbwccLIQJBrb+ZDW9jAYVkByDPikmtrtUHTwcUHOM6o5zqwVwKJoOhhpoBO1GPqlXmoR/GbfVa/H9Iq2upAeiG35Vb0GJzYgzUq80T+GetEyb/1OfzkTzu6hE43IWMQi5NQzO1Dp5BC9xqnqS6cwOa/qiHR8sLwkUWQQSU0c/LFap/XQBHErmS+U4ebF/LDm1OKTQFind6gEUYqPPb7BCBPxuWn99D5hdxS1cEAEPdKOl6MUbUG0NSOOt7uZ3KYk295tVnY0O/s08Kv/RZyu4SMg1W4c/krn3+p1t9y3t3EJYaPM/uVQh1EX2hQqURg+wvpzE90oIX/LZxz9g5l/sAutx42Ef77E5w0T2zoP8uSnNizTfQIoWC4QYvtrFU5nGWGzh+P5HzNviks8uXgOmh079kfAL+LQ89PgmhlWGbaTdx3qQOENFocloAxzNn5KIe0KS3SgHElpoO9aCoeUShiPEsP3xFTfcDhv8gtFbt1ddwhAvJFIqOPnKfIOzW7ET/OLYL0bY88SCt4Y3L4WQEBPaoipjlpZqZIpzsG6djfBE9FqBx13Qrxze2bypteL9Fb9jz0uYC73SeeDw9ymLkaDJBpmctxYFRm/eZd3e7rvDbAnbSRz/61vkoSl3V0x36gNEyA8Y8o=
 install:
 - pip install -r requirements-tests.txt
