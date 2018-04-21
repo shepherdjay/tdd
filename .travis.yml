@@ -4,20 +4,27 @@ python:
 - '3.5'
 - '3.6'
 - nightly
+
 branches:
   only:
   - master
+
 dist: trusty
+
+env:
+  global:
+    secure: dK3TRry573BFZlfzvIjaamT+1mHgCjsCdyxbZnI5fZSCLbZoYuipywawDjtvKvNrOa9rEvP8Qt8ybPrzxeGRYpadIAMrgeKgRnM3/bTWUAFuoYdxuLb13RKmaQjw+N67OZhQzDuhyvXRYYm7plKL0bH9ErdIHb/HvObqZWtTpTi+kA8IxXh2mpkt27j+B17LRcOQmULUhZkcuMuGc920NiozrwK80gmBDQo0uONoSBsaBDf+6EnsGWGS77POPyzGEBZuV3GzVXslbrYmEWhppG5bmLytdJCnP2136XVLcWrbYv2NCWYqEquUKf+xuNrGIBMRNVLQm6TwBvnIhgUyHVmqUkAv2zpYDUM6Qg6IoaNJT/dKpO1rIEytmxOuWS8X7oN25YegjBBfRQnKUocMCatN97ZolyWu3szzY274dRTJNpXA1OPw6/iMfBCeC4zbvYTh2V6Uz84/XC0SNH3lyOaMKqDHMURvEq0BYErF9miIjQ+dp8MAJKSIuSiO/G3mi7CcBlCjJrcbRHBYeAUf9laRhDrun9UUTsnypR17Vb2alggMSBKJ8H+kHfjVAsCL8lJnCM0Kwq7eN0+gTIbcrJvG0aIiv1UfQS6/VH672OXzFc9N+b72usG3vSKtecudWOVlTV9SQEcXPMhJdkZJDdRJClx2WHfiXSlfAnQ4SVU=
+
 addons:
-  chrome: stable
   sauce_connect:
-    username: "shepherdjay"
+    username: shepherdjay
+
 install:
 - pip install -r requirements-tests.txt
 - pip install codecov
+
 script:
 - py.test --cov
+
 after_success:
 - codecov
-secure:
-  - XYWfPo1dDYpwSDHOtQOoDXTxk8S4KJQ2jbwccLIQJBrb+ZDW9jAYVkByDPikmtrtUHTwcUHOM6o5zqwVwKJoOhhpoBO1GPqlXmoR/GbfVa/H9Iq2upAeiG35Vb0GJzYgzUq80T+GetEyb/1OfzkTzu6hE43IWMQi5NQzO1Dp5BC9xqnqS6cwOa/qiHR8sLwkUWQQSU0c/LFap/XQBHErmS+U4ebF/LDm1OKTQFind6gEUYqPPb7BCBPxuWn99D5hdxS1cEAEPdKOl6MUbUG0NSOOt7uZ3KYk295tVnY0O/s08Kv/RZyu4SMg1W4c/krn3+p1t9y3t3EJYaPM/uVQh1EX2hQqURg+wvpzE90oIX/LZxz9g5l/sAutx42Ef77E5w0T2zoP8uSnNizTfQIoWC4QYvtrFU5nGWGzh+P5HzNviks8uXgOmh079kfAL+LQ89PgmhlWGbaTdx3qQOENFocloAxzNn5KIe0KS3SgHElpoO9aCoeUShiPEsP3xFTfcDhv8gtFbt1ddwhAvJFIqOPnKfIOzW7ET/OLYL0bY88SCt4Y3L4WQEBPaoipjlpZqZIpzsG6djfBE9FqBx13Qrxze2bypteL9Fb9jz0uYC73SeeDw9ymLkaDJBpmctxYFRm/eZd3e7rvDbAnbSRz/61vkoSl3V0x36gNEyA8Y8o=
