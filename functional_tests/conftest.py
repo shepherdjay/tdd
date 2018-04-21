@@ -19,11 +19,9 @@ saucelabs_browsers = [
     }, {
         "platform": "OS X 10.11",
         "browserName": "safari",
-        "version": "10.0"
     }, {
         "platform": "OS X 10.11",
         "browserName": "chrome",
-        "version": "54.0"
     }]
 
 
@@ -91,6 +89,7 @@ def saucelabs_driver(request, browser_config):
         command_executor=executor,
         desired_capabilities=desired_caps
     )
+    browser.implicitly_wait(10)
 
     # This is specifically for SauceLabs plugin.
     # In case test fails after selenium session creation having this here will help track it down.
