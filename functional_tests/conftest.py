@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 
@@ -8,15 +9,15 @@ class Browser:
         self.browser = browser
 
     def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element_by_id('id_list_table')
+        table = self.browser.find_element(By.ID, 'id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         assert row_text in [row.text for row in rows]
 
     def get_item_input_box(self):
-        return self.browser.find_element_by_id('id_text')
+        return self.browser.find_element(By.ID, 'id_text')
 
     def get_error_element(self):
-        return self.browser.find_element_by_css_selector('.has-error')
+        return self.browser.find_element(By.CSS_SELECTOR, '.has-error')
 
     def clear_browser(self):
         self.browser.delete_all_cookies()
