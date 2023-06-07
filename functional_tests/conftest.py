@@ -10,7 +10,7 @@ class Browser:
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
+        rows = table.find_elements(By.TAG_NAME'tr')
         assert row_text in [row.text for row in rows]
 
     def get_item_input_box(self):
