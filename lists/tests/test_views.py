@@ -3,6 +3,7 @@ from lists.forms import ItemForm, EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR, Existi
 from lists.models import Item, List
 
 import pytest
+from pytest_django.asserts import assertTemplateUsed, assertContains, assertNotContains, assertRedirects
 
 pytestmark = pytest.mark.django_db
 
@@ -10,7 +11,7 @@ pytestmark = pytest.mark.django_db
 class TestHomePage:
     def test_home_page_renders_home_template(self, client):
         response = client.get('/')
-        pytest.assertTemplateUsed(response, 'home.html')
+        assertTemplateUsed(response, 'home.html')
 
     def test_home_page_uses_item_form(self, client):
         response = client.get('/')
@@ -29,7 +30,7 @@ class TestListView:
     def test_uses_list_templates(self, client):
         list_ = List.objects.create()
         response = client.get('/lists/{}/'.format(list_.id))
-        pytest.assertTemplateUsed(response, 'list.html')
+        assertTemplateUsed(response, 'list.html')
 
     def test_displays_only_items_for_that_list(self, client):
         correct_list = List.objects.create()
@@ -41,10 +42,10 @@ class TestListView:
 
         response = client.get('/lists/{}/'.format(correct_list.id))
 
-        pytest.assertContains(response, 'itemey 1')
-        pytest.assertContains(response, 'itemey 2')
-        pytest.assertNotContains(response, 'other list item 1')
-        pytest.assertNotContains(response, 'other list item 2')
+        assertContains(response, 'itemey 1')
+        assertContains(response, 'itemey 2')
+        assertNotContains(response, 'other list item 1')
+        assertNotContains(response, 'other list item 2')
 
     def test_passes_correct_list_to_template(self, client):
         other_list = List.objects.create()
@@ -58,7 +59,7 @@ class TestListView:
         list_ = List.objects.create()
         response = client.get('/lists/{}/'.format(list_.id))
         assert isinstance(response.context['form'], ExistingListItemForm)
-        pytest.assertContains(response, 'name="text"')
+        assertContains(response, 'name="text"')
 
     def test_can_save_a_POST_request_to_an_existing_list(self, client):
         other_list = List.objects.create()
@@ -81,7 +82,7 @@ class TestListView:
             '/lists/{}/'.format(correct_list.id),
             data={'text': 'A new item for an existing list'}
         )
-        pytest.assertRedirects(response, '/lists/{}/'.format(correct_list.id))
+        assertRedirects(response, '/lists/{}/'.format(correct_list.id))
 
     def test_for_invalid_input_nothing_saved_to_db(self, client):
         self.post_invalid_input(client)
@@ -90,7 +91,7 @@ class TestListView:
     def test_for_invalid_input_renders_list_template(self, client):
         response = self.post_invalid_input(client)
         assert 200 == response.status_code
-        pytest.assertTemplateUsed(response, 'list.html')
+        assertTemplateUsed(response, 'list.html')
 
     def test_for_invalid_input_passes_form_to_template(self, client):
         response = self.post_invalid_input(client)
@@ -98,7 +99,7 @@ class TestListView:
 
     def test_for_invalid_input_shows_error_on_page(self, client):
         response = self.post_invalid_input(client)
-        pytest.assertContains(response, escape(EMPTY_ITEM_ERROR))
+        assertContains(response, escape(EMPTY_ITEM_ERROR))
 
     def test_duplicate_item_validation_errors_end_up_on_lists_page(self, client):
         list1 = List.objects.create()
@@ -109,8 +110,8 @@ class TestListView:
         )
 
         expected_error = escape(DUPLICATE_ITEM_ERROR)
-        pytest.assertContains(response, expected_error)
-        pytest.assertTemplateUsed(response, 'list.html')
+        assertContains(response, expected_error)
+        assertTemplateUsed(response, 'list.html')
         assert 1 == Item.objects.all().count()
 
 
@@ -131,16 +132,16 @@ class TestNewList:
             data={'text': 'A new list item'}
         )
         new_list = List.objects.first()
-        pytest.assertRedirects(response, '/lists/{}/'.format(new_list.id))
+        assertRedirects(response, '/lists/{}/'.format(new_list.id))
 
     def test_for_invalid_input_renders_home_template(self, client):
         response = client.post('/lists/new', data={'text': ''})
         assert 200 == response.status_code
-        pytest.assertTemplateUsed(response, 'home.html')
+        assertTemplateUsed(response, 'home.html')
 
     def test_validation_errors_are_shown_on_home_page(self, client):
         response = client.post('/lists/new', data={'text': ''})
-        pytest.assertContains(response, escape(EMPTY_ITEM_ERROR))
+        assertContains(response, escape(EMPTY_ITEM_ERROR))
 
     def test_for_invalid_input_passes_form_to_template(self, client):
         response = client.post('/lists/new', data={'text': ''})
