@@ -1,4 +1,5 @@
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 import re
 
 
@@ -9,7 +10,7 @@ def test_can_start_a_list_and_retrieve_it_later(live_server, browser):
 
     # She notices the page title and header mention to-do lists
     assert 'To-Do' in browser.title
-    header_text = browser.find_element_by_tag_name('h1').text
+    header_text = browser.find_element(By.TAG_NAME, 'h1').text
     assert 'To-Do' in header_text
 
     # She is invited to enter a to-do item straight away
@@ -46,7 +47,7 @@ def test_can_start_a_list_and_retrieve_it_later(live_server, browser):
     # Francis visits the home page. There is no sign of Edith's
     # list
     browser.get(live_server.url)
-    page_text = browser.find_element_by_tag_name('body').text
+    page_text = browser.find_element(By.TAG_NAME,'body').text
     assert 'Buy peacock feathers' not in page_text
     assert 'make a fly' not in page_text
 
@@ -62,7 +63,7 @@ def test_can_start_a_list_and_retrieve_it_later(live_server, browser):
     assert edith_list_url != francis_lists_url
 
     # Again, there is no trace of Edith's list
-    page_text = browser.find_element_by_tag_name('body').text
+    page_text = browser.find_element(By.TAG_NAME, 'body').text
     assert 'Buy peacock feathers' not in page_text
     assert 'Buy milk' in page_text
 
